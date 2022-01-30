@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.SceneManagement;
+
 public class Player : MonoBehaviour
 {
 
@@ -36,6 +38,7 @@ public class Player : MonoBehaviour
     {
         Shot();
 
+        if(Input.GetKeyDown("r")) SceneManager.LoadScene("Game");
     }
 
     void Shot()
@@ -54,11 +57,11 @@ public class Player : MonoBehaviour
                 Debug.Log("‰Ÿ‚³‚ê‚Ä‚¢‚é");
                 
                 Vector2 tempVec = new Vector2(startPos.x - Input.mousePosition.x, startPos.y - Input.mousePosition.y);
-
+                
                 power = tempVec.magnitude;
+
                 angle = CalculateAngle(tempVec);
                
-                Debug.Log(power);
             }
             else if (Input.GetMouseButtonUp(0))
             {

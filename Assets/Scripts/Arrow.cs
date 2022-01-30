@@ -18,7 +18,6 @@ public class Arrow : MonoBehaviour
     {
 
         transform.localScale = new Vector3(player.power/100.0f, 1.0f, 1.0f);
-        //transform.rotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, Mathf.Repeat(player.angle, 360)));
         transform.rotation = Quaternion.AngleAxis(player.angle, new Vector3(0, 0, 1));
     }
 }

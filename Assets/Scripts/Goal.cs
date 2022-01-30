@@ -20,6 +20,10 @@ public class Goal : MonoBehaviour
     {
         Debug.Log(other.gameObject.name);
 
-        if (other.gameObject.name == "Player") Debug.Log("GOAL!!!");
+        if (other.gameObject.name == "Player")
+        {
+            Debug.Log("GOAL!!!");
+            Destroy(this.gameObject);
+        }
     }
 }
