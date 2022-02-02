@@ -7,17 +7,20 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
 
-    public float xPower;
-    public float yPower;
-
     public float angle;
     public float power;
+
+    public float power2nd;
+    public float power3rd;
 
     bool isShot = false;
     bool end1st = false;
     bool end2nd = false;
 
     bool isEnd = false;
+
+    float angle2nd;
+    float angle3rd;
 
     Vector2 startPos;
     Vector2 endPos;
@@ -49,12 +52,12 @@ public class Player : MonoBehaviour
 
             if (Input.GetMouseButtonDown(0))
             {
-                Debug.Log("押された");
+                //Debug.Log("押された");
                 startPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
             }
             else if(Input.GetMouseButton(0))
             {
-                Debug.Log("押されている");
+                //Debug.Log("押されている");
                 
                 Vector2 tempVec = new Vector2(startPos.x - Input.mousePosition.x, startPos.y - Input.mousePosition.y);
                 
@@ -68,11 +71,12 @@ public class Player : MonoBehaviour
 
                 isShot = true;
 
-                Debug.Log("リリース");
+                //Debug.Log("リリース");
                 endPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
 
 
                 vec = new Vector2(startPos.x - endPos.x, startPos.y - endPos.y);
+
                 //vec = vec / vec.magnitude;
 
                 //Vector2 force = new Vector2(xPower, yPower);
@@ -96,8 +100,9 @@ public class Player : MonoBehaviour
     }
 
     void OnCollisionEnter2D(Collision2D coll)
-    {        
-        if(isShot)
+    {
+
+        if (isShot)
         {
             Debug.Log(coll.gameObject);
 
@@ -106,15 +111,23 @@ public class Player : MonoBehaviour
                 end1st = true;
                 Debug.Log("1回目の着地");
 
-                if(coll.gameObject.tag == "Wall")
-                {
-                    vec = new Vector2(-vec.x, vec.y);
-                    rb.AddForce(vec * 1.5f);
-                } 
-                else
-                {
-                    rb.AddForce(vec * 1.5f);
-                }
+                angle2nd = angle - Mathf.Repeat(Mathf.Atan2(coll.contacts[0].normal.x, coll.contacts[0].normal.y) * Mathf.Rad2Deg, 360);
+
+                Debug.Log(angle);
+                Debug.Log(Mathf.Repeat(Mathf.Atan2(coll.contacts[0].normal.x, coll.contacts[0].normal.y) * Mathf.Rad2Deg, 360));
+
+                Vector2 nextVector = new Vector2(Mathf.Cos(angle2nd * Mathf.Deg2Rad), Mathf.Sin(angle2nd * Mathf.Deg2Rad)) * power * power2nd;
+
+                //rb.AddForce(nextVector);
+                //if(coll.gameObject.tag == "Wall")
+                //{
+                //    vec = new Vector2(-vec.x, vec.y);
+                //    rb.AddForce(vec * 1.5f);
+                //} 
+                //else
+                //{
+                //    rb.AddForce(vec * 1.5f);
+                //}
 
             } 
             else if(!end2nd)
@@ -122,15 +135,21 @@ public class Player : MonoBehaviour
                 end2nd = true;
                 Debug.Log("2回目の着地");
 
-                if (coll.gameObject.tag == "Wall")
-                {
-                    vec = new Vector2(-vec.x, vec.y);
-                    rb.AddForce(vec * 2.0f);
-                }
-                else
-                {
-                    rb.AddForce(vec * 2.0f);
-                }
+                angle3rd = angle2nd - Mathf.Repeat(Mathf.Atan2(coll.contacts[0].normal.x, coll.contacts[0].normal.y) * Mathf.Rad2Deg, 360);
+
+                Vector2 nextVector = new Vector2(Mathf.Cos(angle3rd * Mathf.Deg2Rad), Mathf.Sin(angle3rd * Mathf.Deg2Rad)) * power * power3rd;
+
+                //rb.AddForce(nextVector);
+                
+                //if (coll.gameObject.tag == "Wall")
+                //{
+                //    vec = new Vector2(-vec.x, vec.y);
+                //    rb.AddForce(vec * 2.0f);
+                //}
+                //else
+                //{
+                //    rb.AddForce(vec * 2.0f);
+                //}
             }
         }
     }
