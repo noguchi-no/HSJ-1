@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class Player_Physics : MonoBehaviour
 {
+    public string stage;
+
     public float angle;
     public float power;
 
@@ -35,7 +37,8 @@ public class Player_Physics : MonoBehaviour
     {
         Shot();
 
-        if (Input.GetKeyDown("r")) SceneManager.LoadScene("Game_Physics");
+        if (Input.GetKeyDown("r")) SceneManager.LoadScene(stage);
+
     }
 
     void Shot()
@@ -103,18 +106,6 @@ public class Player_Physics : MonoBehaviour
 
                 rb.sharedMaterial = physicsMaterial2D;
 
-                //rb.drag = 0.5f;
-
-                //if (coll.gameObject.tag == "Wall")
-                //{
-                //    vec = new Vector2(-vec.x, vec.y);
-                //    rb.AddForce(vec * 1.5f);
-                //}
-                //else
-                //{
-                //    rb.AddForce(vec * 1.5f);
-                //}
-
             }
             else if (!end2nd)
             {
@@ -122,20 +113,6 @@ public class Player_Physics : MonoBehaviour
                 Debug.Log("2‰ñ–Ú‚Ì’…’n");
 
                 rb.sharedMaterial = physicsMaterial2D2;
-
-                //rb.drag = 1.0f;
-
-                //rb.sharedMaterial.bounciness = 1.5f;
-
-                //if (coll.gameObject.tag == "Wall")
-                //{
-                //    vec = new Vector2(-vec.x, vec.y);
-                //    rb.AddForce(vec * 2.0f);
-                //}
-                //else
-                //{
-                //    rb.AddForce(vec * 2.0f);
-                //}
             }
         }
     }
